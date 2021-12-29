@@ -2,6 +2,8 @@ package com.reactnativefacedetection;
 
 import androidx.annotation.NonNull;
 
+import android.graphics.Rect;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -81,9 +83,16 @@ public class FaceDetectionModule extends ReactContextBaseJavaModule {
                     for (Face face : faces) {
                         Map<String, Object> faceFormatted = new HashMap<>();
 
+                        Rect boundingBox = face.getBoundingBox();
+
                         faceFormatted.put(KEY_BOUNDING_BOX,
-                          FaceDetectionUtils.rectToIntArray(face.getBoundingBox())
-                        );
+                          FaceDetectionUtils.rectToIntArray(boundingBox)
+                        );                        
+
+                        faceFormatted.put("x", boundingBox.left);
+                        faceFormatted.put("y", boundingBox.top);
+                        faceFormatted.put("height", boundingBox.height());
+                        faceFormatted.put("width", boundingBox.width());
 
                         faceFormatted.put(KEY_HEAD_EULER_ANGLE_X, face.getHeadEulerAngleX());
                         faceFormatted.put(KEY_HEAD_EULER_ANGLE_Y, face.getHeadEulerAngleY());

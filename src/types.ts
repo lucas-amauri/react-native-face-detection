@@ -102,4 +102,9 @@ export type FaceResult = {
       ];
     }
   ];
+
+  x : number;
+  y : number;
+  width : number;
+  height : number;
 };
